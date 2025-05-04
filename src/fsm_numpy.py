@@ -5,7 +5,7 @@ def fast_sweep_2d(grid, fixed_cells, obstacle, f, dh, iterations=5):
     # this is used for padding the outer boundaries of the domain,
     # so that the min() operations in the upwind scheme choose the inner point.
     large_val = 1e3
-    nx, ny = grid.shape
+    ny, nx = grid.shape
     # 4 directions to sweep along - the range parameters for x and y.
     sweep_dirs = [
         (0, nx, 1, 0, ny, 1),  # Top-left to bottom-right

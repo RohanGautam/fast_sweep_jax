@@ -6,7 +6,7 @@ from functools import partial
 @partial(jax.jit, static_argnames=["iterations"])
 def fast_sweep_2d(grid, fixed_cells, obstacle, f, dh, iterations=5):
     large_val = 1e3
-    nx, ny = grid.shape
+    ny, nx = grid.shape
     sweep_dirs = [
         (0, nx, 1, 0, ny, 1),  # Top-left to bottom-right
         (nx - 1, -1, -1, 0, ny, 1),  # Top-right to bottom-left
