@@ -1,11 +1,12 @@
 import numpy as np
 
 
-def fast_sweep_2d(grid, fixed_cells, obstacle, dh, iterations=5):
-    f = 1.0  # interface speed, 1 for sdf
+def fast_sweep_2d(grid, fixed_cells, obstacle, f, dh, iterations=5):
+    # this is used for padding the outer boundaries of the domain,
+    # so that the min() operations in the upwind scheme choose the inner point.
     large_val = 1e3
-    # epsilon = 1e-10
     nx, ny = grid.shape
+    # 4 directions to sweep along - the range parameters for x and y.
     sweep_dirs = [
         (0, nx, 1, 0, ny, 1),  # Top-left to bottom-right
         (nx - 1, -1, -1, 0, ny, 1),  # Top-right to bottom-left
@@ -13,6 +14,7 @@ def fast_sweep_2d(grid, fixed_cells, obstacle, dh, iterations=5):
         (0, nx, 1, ny - 1, -1, -1),  # Bottom-left to top-right
     ]
 
+    # pad with a large value to properly handle boundary conditions in the upwind scheme.
     padded = np.pad(grid, pad_width=1, mode="constant", constant_values=large_val)
 
     for _ in range(iterations):

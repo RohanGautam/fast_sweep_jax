@@ -4,10 +4,8 @@ from functools import partial
 
 
 @partial(jax.jit, static_argnames=["iterations"])
-def fast_sweep_2d(grid, fixed_cells, obstacle, dh, iterations=5):
-    f = 1.0  # interface speed, 1 for sdf
+def fast_sweep_2d(grid, fixed_cells, obstacle, f, dh, iterations=5):
     large_val = 1e3
-    # epsilon = 1e-10
     nx, ny = grid.shape
     sweep_dirs = [
         (0, nx, 1, 0, ny, 1),  # Top-left to bottom-right
